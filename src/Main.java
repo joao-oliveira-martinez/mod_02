@@ -125,7 +125,7 @@ public class Main {
             System.out.println("0. Fechar aplicativo");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
-            scanner.nextLine(); // Limpar o buffer do scanner
+            scanner.nextLine(); 
 
             switch (opcao) {
                 case 1:
@@ -158,8 +158,8 @@ public class Main {
 
         System.out.print("Ano de lançamento: ");
         int anoLancamento = scanner.nextInt();
-        scanner.nextLine(); // Limpar o buffer do scanner
-
+        scanner.nextLine(); 
+        
         Diretor diretorFilme = obterDiretor();
 
         System.out.print("Sinopse: ");
@@ -167,15 +167,14 @@ public class Main {
 
         System.out.print("Estrelas (de 1 a 5): ");
         int estrelas = scanner.nextInt();
-        scanner.nextLine(); // Limpar o buffer do scanner
-
+        scanner.nextLine(); 
         Filme filme = new Filme(nomeFilme, anoLancamento, diretorFilme, sinopse, estrelas);
 
         int opcaoAtor;
         do {
             System.out.println("Deseja adicionar um ator ao elenco? (1 - Sim, 2 - Não)");
             opcaoAtor = scanner.nextInt();
-            scanner.nextLine(); // Limpar o buffer do scanner
+            scanner.nextLine();
 
             if (opcaoAtor == 1) {
                 Ator ator = obterAtor();
@@ -188,7 +187,7 @@ public class Main {
 
         System.out.println("Deseja criar um arquivo com as informações do filme? (1 - Sim, 2 - Não)");
         int opcaoArquivo = scanner.nextInt();
-        scanner.nextLine(); // Limpar o buffer do scanner
+        scanner.nextLine(); 
         if (opcaoArquivo == 1) {
             filme.salvarEmArquivo();
         }
@@ -204,7 +203,7 @@ public class Main {
             }
             System.out.print("Digite o número do filme que deseja ver: ");
             int opcaoFilme = scanner.nextInt();
-            scanner.nextLine(); // Limpar o buffer do scanner
+            scanner.nextLine();
 
             if (opcaoFilme >= 1 && opcaoFilme <= filmes.size()) {
                 Filme filmeSelecionado = filmes.get(opcaoFilme - 1);
@@ -221,7 +220,7 @@ public class Main {
             return;
         }
 
-        scanner.nextLine(); // Limpar o buffer do scanner
+        scanner.nextLine(); 
         System.out.print("Digite o nome do filme: ");
         String nomeFilme = scanner.nextLine();
 
@@ -265,14 +264,12 @@ public class Main {
         System.out.print("Nome do diretor: ");
         String nomeDiretor = scanner.nextLine();
 
-        // Verificar se o diretor já está cadastrado
         for (Diretor diretor : diretores) {
             if (diretor.nome.equals(nomeDiretor)) {
                 return diretor;
             }
         }
-
-        // Se não estiver cadastrado, criar um novo diretor
+        
         Diretor novoDiretor = new Diretor(nomeDiretor);
         diretores.add(novoDiretor);
         return novoDiretor;
@@ -282,14 +279,12 @@ public class Main {
         System.out.print("Nome do ator: ");
         String nomeAtor = scanner.nextLine();
 
-        // Verificar se o ator já está cadastrado
         for (Ator ator : atores) {
             if (ator.nome.equals(nomeAtor)) {
                 return ator;
             }
         }
 
-        // Se não estiver cadastrado, criar um novo ator
         Ator novoAtor = new Ator(nomeAtor);
         atores.add(novoAtor);
         return novoAtor;
