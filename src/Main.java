@@ -29,6 +29,10 @@ class Ator extends Pessoa {
         filmesParticipados.add(filme);
     }
 
+    public ArrayList<Filme> getFilmesParticipados() {
+        return filmesParticipados;
+    }
+
     @Override
     public String toString() {
         return "Ator\n" + super.toString();
@@ -36,8 +40,19 @@ class Ator extends Pessoa {
 }
 
 class Diretor extends Pessoa {
+    private ArrayList<Filme> filmesDirigidos;
+
     public Diretor(String nome) {
         super(nome);
+        filmesDirigidos = new ArrayList<>();
+    }
+
+    public void adicionarFilme(Filme filme) {
+        filmesDirigidos.add(filme);
+    }
+
+    public ArrayList<Filme> getFilmesDirigidos() {
+        return filmesDirigidos;
     }
 
     @Override
@@ -114,6 +129,10 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        exibirMenuPrincipal();
+    }
+
+    private static void exibirMenuPrincipal() {
         int opcao;
         do {
             System.out.println("Menu:");
@@ -125,7 +144,7 @@ public class Main {
             System.out.println("0. Fechar aplicativo");
             System.out.print("Escolha uma opção: ");
             opcao = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
@@ -158,8 +177,8 @@ public class Main {
 
         System.out.print("Ano de lançamento: ");
         int anoLancamento = scanner.nextInt();
-        scanner.nextLine(); 
-        
+        scanner.nextLine();
+
         Diretor diretorFilme = obterDiretor();
 
         System.out.print("Sinopse: ");
@@ -167,7 +186,8 @@ public class Main {
 
         System.out.print("Estrelas (de 1 a 5): ");
         int estrelas = scanner.nextInt();
-        scanner.nextLine(); 
+        scanner.nextLine();
+
         Filme filme = new Filme(nomeFilme, anoLancamento, diretorFilme, sinopse, estrelas);
 
         int opcaoAtor;
@@ -187,7 +207,7 @@ public class Main {
 
         System.out.println("Deseja criar um arquivo com as informações do filme? (1 - Sim, 2 - Não)");
         int opcaoArquivo = scanner.nextInt();
-        scanner.nextLine(); 
+        scanner.nextLine();
         if (opcaoArquivo == 1) {
             filme.salvarEmArquivo();
         }
@@ -220,7 +240,7 @@ public class Main {
             return;
         }
 
-        scanner.nextLine(); 
+        scanner.nextLine();
         System.out.print("Digite o nome do filme: ");
         String nomeFilme = scanner.nextLine();
 
@@ -243,8 +263,26 @@ public class Main {
             System.out.println("Nenhum ator cadastrado ainda.");
         } else {
             System.out.println("Atores cadastrados:");
-            for (Ator ator : atores) {
-                System.out.println(ator);
+            for (int i = 0; i < atores.size(); i++) {
+                System.out.println((i + 1) + ". " + atores.get(i).nome);
+            }
+            System.out.print("Digite o número do ator que deseja ver: ");
+            int opcaoAtor = scanner.nextInt();
+            scanner.nextLine();
+
+            if (opcaoAtor >= 1 && opcaoAtor <= atores.size()) {
+                Ator atorSelecionado = atores.get(opcaoAtor - 1);
+                ArrayList<Filme> filmesAtor = atorSelecionado.getFilmesParticipados();
+                if (filmesAtor.isEmpty()) {
+                    System.out.println("Este ator não participou de nenhum filme.");
+                } else {
+                    System.out.println("Filmes em que " + atorSelecionado.nome + " participou:");
+                    for (Filme filme : filmesAtor) {
+                        System.out.println(filme.getNome());
+                    }
+                }
+            } else {
+                System.out.println("Ator inválido. Tente novamente.");
             }
         }
     }
@@ -254,8 +292,26 @@ public class Main {
             System.out.println("Nenhum diretor cadastrado ainda.");
         } else {
             System.out.println("Diretores cadastrados:");
-            for (Diretor diretor : diretores) {
-                System.out.println(diretor);
+            for (int i = 0; i < diretores.size(); i++) {
+                System.out.println((i + 1) + ". " + diretores.get(i).nome);
+            }
+            System.out.print("Digite o número do diretor que deseja ver: ");
+            int opcaoDiretor = scanner.nextInt();
+            scanner.nextLine();
+
+            if (opcaoDiretor >= 1 && opcaoDiretor <= diretores.size()) {
+                Diretor diretorSelecionado = diretores.get(opcaoDiretor - 1);
+                ArrayList<Filme> filmesDiretor = diretorSelecionado.getFilmesDirigidos();
+                if (filmesDiretor.isEmpty()) {
+                    System.out.println("Este diretor não dirigiu nenhum filme.");
+                } else {
+                    System.out.println("Filmes dirigidos por " + diretorSelecionado.nome + ":");
+                    for (Filme filme : filmesDiretor) {
+                        System.out.println(filme.getNome());
+                    }
+                }
+            } else {
+                System.out.println("Diretor inválido. Tente novamente.");
             }
         }
     }
@@ -269,7 +325,7 @@ public class Main {
                 return diretor;
             }
         }
-        
+
         Diretor novoDiretor = new Diretor(nomeDiretor);
         diretores.add(novoDiretor);
         return novoDiretor;
